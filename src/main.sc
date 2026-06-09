@@ -1,23 +1,21 @@
 require: slotfilling/slotFilling.sc
-  module = sys.zb-common
+    module = sys.zb-common
+
 theme: /
 
-    state: Start
+    state: hello
         q!: $regex</start>
-        a: Начнём.
+        q!: * (привет|здравствуй|hello|хай|добрый день|добрый вечер|доброе утро|приветствую|здарова) *
+        a: Привет! Я бот-помощник. Могу рассказать о погоде и подсказать курс валют. Что интересует?
 
-    state: Hello
-        intent!: /привет
-        a: Привет привет
+    state: weather
+        q!: * (погод|прогноз|температур|на улице|за окном|холодно|тепло|дожд|снег|солнечно|ветер|weather) *
+        a: Сегодня переменная облачность, +15°C, без осадков. Хороший день!
 
-    state: Bye
-        intent!: /пока
-        a: Пока пока
+    state: currency
+        q!: * (курс|валют|доллар|евро|рубл|обмен|exchange|currency|usd|eur) *
+        a: Курс на сегодня: доллар — 90 ₽, евро — 100 ₽.
 
     state: NoMatch
         event!: noMatch
-        a: Я не понял. Вы сказали: {{$request.query}}
-
-    state: Match
-        event!: match
-        a: {{$context.intent.answer}}
+        a: Извините, не понял запрос. Я умею про погоду и курсы валют — спросите про это.
